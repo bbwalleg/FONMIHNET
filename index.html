@@ -5,6 +5,473 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FONMIHNET | CEO Prediction Wheel</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --bg: #060816;
+        --panel: rgba(255, 255, 255, 0.08);
+        --panel-strong: rgba(255, 255, 255, 0.18);
+        --text: #f7f9ff;
+        --muted: #9ab2d2;
+        --accent: #ffb447;
+        --accent-strong: #ff7b1a;
+        --border: rgba(255, 255, 255, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: Inter, 'Segoe UI', Arial, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at top left, rgba(255, 180, 70, 0.16), transparent 22%),
+          radial-gradient(circle at right center, rgba(71, 193, 255, 0.09), transparent 25%),
+          linear-gradient(180deg, #050610 0%, #071026 30%, #02040b 100%);
+      }
+
+      .page-shell {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 24px 28px 40px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+        padding: 18px 24px;
+        background: rgba(14, 22, 40, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        box-shadow: 0 24px 45px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .nav-links a,
+      .footer a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.2s ease;
+      }
+
+      .nav-links a:hover,
+      .footer a:hover {
+        color: var(--accent);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+        gap: 32px;
+        padding: 56px 0 40px;
+      }
+
+      .hero-copy {
+        max-width: 640px;
+      }
+
+      .eyebrow {
+        font-size: 0.78rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.05;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 4.1rem);
+        letter-spacing: -0.04em;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: clamp(1.65rem, 2vw, 2.3rem);
+        margin-bottom: 18px;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+      }
+
+      .lead,
+      .wheel-copy p,
+      .bet-panel p,
+      .prize-medal p,
+      .footer p {
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 26px;
+      }
+
+      .btn,
+      .action-btn,
+      .spin-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 999px;
+        font-weight: 800;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+      }
+
+      .btn-primary,
+      .action-btn,
+      .spin-btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #111;
+        padding: 14px 24px;
+        box-shadow: 0 16px 30px rgba(255, 167, 64, 0.32);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.07);
+        color: var(--text);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        padding: 14px 24px;
+      }
+
+      .btn-primary:hover,
+      .action-btn:hover,
+      .spin-btn:hover,
+      .btn-secondary:hover {
+        transform: translateY(-1px);
+      }
+
+      .bet-panel,
+      .wheel-wrapper,
+      .footer,
+      .prize-medal {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 32px 90px rgba(0, 0, 0, 0.28);
+        backdrop-filter: blur(24px);
+      }
+
+      .bet-panel {
+        padding: 34px;
+        border-radius: 32px;
+      }
+
+      .question-card {
+        display: grid;
+        gap: 20px;
+      }
+
+      .bet-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        padding: 20px 22px;
+        border-radius: 24px;
+        background: linear-gradient(145deg, rgba(255, 179, 71, 0.2), rgba(255, 123, 26, 0.11));
+      }
+
+      .option-badge {
+        display: inline-flex;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 0.72rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .bet-option strong {
+        font-size: 1.35rem;
+      }
+
+      .field {
+        display: grid;
+        gap: 10px;
+      }
+
+      .field span {
+        font-size: 0.95rem;
+      }
+
+      .field input {
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        padding: 16px 18px;
+        font-size: 1rem;
+        background: rgba(10, 16, 30, 0.88);
+        color: var(--text);
+      }
+
+      .bet-status {
+        margin: 0;
+        color: #d4def9;
+      }
+
+      .wheel-section {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 32px;
+        align-items: start;
+        padding-bottom: 24px;
+      }
+
+      .wheel-copy {
+        max-width: 560px;
+      }
+
+      .wheel-stage {
+        position: relative;
+        display: flex;
+        justify-content: center;
+      }
+
+      .wheel-wrapper {
+        border-radius: 32px;
+        padding: 36px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+        width: min(100%, 500px);
+      }
+
+      .wheel {
+        position: relative;
+        width: 360px;
+        height: 360px;
+        border-radius: 50%;
+        border: 14px solid rgba(255, 255, 255, 0.18);
+        box-shadow: inset 0 0 0 14px rgba(0, 0, 0, 0.24), 0 26px 55px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        transition: transform 4.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .wheel::before {
+        content: '';
+        position: absolute;
+        inset: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(0,0,0,0.24));
+        border: 1px solid rgba(255,255,255,0.12);
+        z-index: 1;
+      }
+
+      .wheel-label {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 84px;
+        padding: 8px 12px;
+        text-align: center;
+        font-size: 0.65rem;
+        font-weight: 800;
+        color: #111;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        background: rgba(255,255,255,0.92);
+        border-radius: 999px;
+        transform: translate(-50%, -50%) rotate(calc(var(--index) * 13.846deg)) translateY(-144px) rotate(calc(var(--index) * -13.846deg));
+        z-index: 3;
+        line-height: 1.1;
+      }
+
+      .wheel-pointer {
+        position: absolute;
+        top: 8px;
+        width: 0;
+        height: 0;
+        border-left: 18px solid transparent;
+        border-right: 18px solid transparent;
+        border-top: 40px solid #fff;
+        z-index: 7;
+      }
+
+      .wheel-core {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fff4c2, #ffb447);
+        color: #111;
+        font-weight: 900;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 0 0 10px rgba(255,255,255,0.16);
+        z-index: 5;
+        text-transform: uppercase;
+      }
+
+      .spin-btn {
+        margin-top: 8px;
+        padding: 14px 28px;
+      }
+
+      .spin-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .fireworks {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 6;
+      }
+
+      .fireworks span {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color);
+        opacity: 0;
+        animation: burst 1.2s ease-out forwards;
+        animation-delay: var(--delay);
+        transform: translate(-50%, -50%) translate(var(--x), var(--y));
+      }
+
+      @keyframes burst {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.2);
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, -50%) translate(var(--x), var(--y)) scale(1.2);
+        }
+      }
+
+      .prize-medal {
+        position: absolute;
+        inset: 50% auto auto 50%;
+        transform: translate(-50%, -50%);
+        width: min(86%, 310px);
+        padding: 24px;
+        border-radius: 26px;
+        text-align: center;
+        z-index: 8;
+      }
+
+      .prize-medal.hidden {
+        display: none;
+      }
+
+      .medal-icon {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+      }
+
+      .prize-medal h3 {
+        font-size: 1.35rem;
+        margin-bottom: 8px;
+        color: #fff;
+      }
+
+      .prize-medal p {
+        margin: 0;
+      }
+
+      .footer {
+        margin-top: 30px;
+        border-radius: 28px;
+        padding: 22px 26px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .wheel-section {
+          grid-template-columns: 1fr;
+        }
+
+        .page-shell {
+          padding: 20px 20px 36px;
+        }
+
+        .wheel-wrapper {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          gap: 22px;
+        }
+
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nav-links {
+          justify-content: flex-start;
+        }
+
+        .wheel {
+          width: 300px;
+          height: 300px;
+        }
+
+        .wheel-label {
+          width: 74px;
+          transform: translate(-50%, -50%) rotate(calc(var(--index) * 13.846deg)) translateY(-124px) rotate(calc(var(--index) * -13.846deg));
+          font-size: 0.62rem;
+        }
+
+        .wheel-core {
+          width: 104px;
+          height: 104px;
+        }
+
+        .spin-btn {
+          padding: 14px 22px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="page-shell">
@@ -24,7 +491,7 @@
             <h1>Predict the next CEO and spin for glory.</h1>
             <p class="lead">
               Place your bet on the only available outcome, then let the wheel reveal your reward.
-              The experience is designed to feel premium, bold, and playful — like a polished promo page built for a modern bookmaker.
+              The experience feels premium, bold, and sharp — built to look like a modern promo landing page.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="#wheel">Spin now</a>
@@ -37,11 +504,11 @@
               <p class="eyebrow">Prediction market</p>
               <h2>How is gonna be next CEO?</h2>
               <div class="bet-option">
-                <span class="option-badge">Only option</span>
                 <div>
+                  <span class="option-badge">Only option</span>
                   <strong>Miha</strong>
-                  <p>5x payout</p>
                 </div>
+                <p>5x payout</p>
               </div>
               <label class="field" for="betAmount">
                 <span>Bet amount</span>
@@ -58,8 +525,8 @@
             <p class="eyebrow">Centerpiece experience</p>
             <h2>The fortune wheel</h2>
             <p>
-              The wheel is built with about 25 “NOT MIHA” segments and one special “MIHA IS OUR NEW CEO” segment.
-              Once your bet is placed, the wheel always lands on the Miha segment for a guaranteed win.
+              This wheel is crafted with 25 “NOT MIHA” zones and one special “MIHA IS OUR NEW CEO” segment.
+              After placing your bet, the wheel always lands on Miha for a winning reveal.
             </p>
           </div>
 
@@ -103,10 +570,10 @@
         const segmentCount = 26;
         const step = 360 / segmentCount;
         const colors = [
-          '#ffb347', '#ff7b1a', '#1b2342', '#274d6b', '#47c1ff', '#ffd166',
-          '#7b3fe4', '#ff5f7e', '#1f2a44', '#0e1730', '#2ec4b6', '#ff8fab',
-          '#f4a261', '#3b82f6', '#0f172a', '#f59e0b', '#a855f7', '#14b8a6',
-          '#f43f5e', '#f97316', '#60a5fa', '#22c55e', '#3b82f6', '#facc15', '#ef4444', '#111827'
+          '#ffb347', '#ff7b1a', '#e2b42b', '#1b2342', '#274d6b', '#47c1ff',
+          '#ffc970', '#7b3fe4', '#ff5f7e', '#1f2a44', '#0e1730', '#2ec4b6',
+          '#ff8fab', '#f4a261', '#3b82f6', '#0f172a', '#f59e0b', '#a855f7',
+          '#14b8a6', '#f43f5e', '#f97316', '#60a5fa', '#22c55e', '#facc15', '#ef4444', '#111827'
         ];
 
         const gradientParts = [];
@@ -118,8 +585,7 @@
 
         wheelCanvas.style.background = `conic-gradient(${gradientParts.join(', ')})`;
 
-        const labelCount = segmentCount;
-        for (let i = 0; i < labelCount; i += 1) {
+        for (let i = 0; i < segmentCount; i += 1) {
           const label = document.createElement('div');
           label.className = 'wheel-label';
           label.textContent = i === 0 ? 'MIHA IS OUR NEW CEO' : 'NOT MIHA';
@@ -135,11 +601,11 @@
 
       function launchFireworks() {
         fireworks.innerHTML = '';
-        const pieces = 28;
+        const pieces = 32;
         for (let i = 0; i < pieces; i += 1) {
           const piece = document.createElement('span');
           const angle = (i / pieces) * Math.PI * 2;
-          const distance = 70 + Math.random() * 70;
+          const distance = 80 + Math.random() * 60;
           piece.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
           piece.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
           piece.style.setProperty('--delay', `${Math.random() * 0.3}s`);
