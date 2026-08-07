@@ -1,40 +1,40 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="FONMIHNET — a playful interactive CEO prediction promo experience."
+      content="FONMIHNET — интерактивное промо с шуточной ставкой на нового генерального директора."
     />
     <meta name="theme-color" content="#e30613" />
-    <title>FONMIHNET — Who's going to be our CEO?</title>
+    <title>FONMIHNET — кто станет нашим гендиректором?</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="promo-bar">
       <div class="promo-bar__inner">
-        <span><strong>FONMIHNET SPECIAL</strong> · One seat. Twelve contenders.</span>
-        <a href="#wheel">Spin now <span aria-hidden="true">→</span></a>
+        <span><strong>СПЕЦПРОЕКТ FONMIHNET</strong> · Одно кресло. Двенадцать претендентов.</span>
+        <a href="#wheel">Крутить <span aria-hidden="true">→</span></a>
       </div>
     </div>
 
     <header class="site-header">
-      <a class="logo" href="#top" aria-label="FONMIHNET home">
+      <a class="logo" href="#top" aria-label="Главная FONMIHNET">
         <svg class="logo__mark" viewBox="0 0 36 36" aria-hidden="true">
           <path d="M7 5h22v7H15v4h12v7H15v9H7z" />
         </svg>
         <span>FONMIHNET</span>
       </a>
 
-      <nav class="main-nav" aria-label="Main navigation">
-        <a class="is-active" href="#top">Promo</a>
-        <a href="#wheel">CEO wheel</a>
-        <a href="#how">How it works</a>
+      <nav class="main-nav" aria-label="Основная навигация">
+        <a class="is-active" href="#top">Промо</a>
+        <a href="#wheel">Колесо</a>
+        <a href="#how">Как это работает</a>
       </nav>
 
-      <a class="header-cta" href="#wheel">Make a pick</a>
+      <a class="header-cta" href="#wheel">Сделать ставку</a>
     </header>
 
     <main id="top">
@@ -43,52 +43,52 @@
         <div class="hero__glow hero__glow--two" aria-hidden="true"></div>
 
         <div class="hero__copy">
-          <div class="live-pill"><span></span> Decision day · live</div>
-          <p class="overline">The office prediction everyone is talking about</p>
-          <h1 id="hero-title">Who’s going to be <em>our CEO?</em></h1>
+          <div class="live-pill"><span></span> День решения · в эфире</div>
+          <p class="overline">Офисный прогноз, о котором говорят все</p>
+          <h1 id="hero-title">Кто станет нашим <em>гендиректором?</em></h1>
           <p class="hero__lead">
-            Forget the rumour mill. Give the wheel one decisive spin and let destiny assign the corner office.
+            Забудьте офисные слухи. Один решающий поворот колеса — и судьба сама назначит хозяина главного кабинета.
           </p>
 
           <div class="bet-slip" id="betSlip">
             <div class="bet-slip__topline">
-              <span class="bet-slip__tag">Bet slip</span>
+              <span class="bet-slip__tag">Купон</span>
               <span class="bet-slip__multiplier">50×</span>
             </div>
-            <h2>Bet on our new CEO name</h2>
-            <p>Is it gonna be Miha?</p>
+            <h2>Ставка на нового гендиректора</h2>
+            <p>Это будет Миха?</p>
 
-            <div class="bet-choices" role="group" aria-label="Will Miha be the new CEO?">
+            <div class="bet-choices" role="group" aria-label="Станет ли Миха новым генеральным директором?">
               <button class="bet-choice is-selected" type="button" data-choice="yes" aria-pressed="true">
-                Yes <strong>50×</strong>
+                Да <strong>50×</strong>
               </button>
               <button class="bet-choice" type="button" data-choice="no" aria-pressed="false">
-                No
+                Нет
               </button>
             </div>
 
             <div class="bet-slip__action">
               <label class="stake-field" for="betAmount">
-                <span>Bet amount</span>
+                <span>Сумма ставки</span>
                 <span class="stake-field__input"><i>$</i><input id="betAmount" type="number" min="1" step="10" value="500" inputmode="decimal" /></span>
               </label>
-              <button class="button button--dark" id="placeBetBtn" type="button">Place bet</button>
+              <button class="button button--dark" id="placeBetBtn" type="button">Сделать ставку</button>
             </div>
-            <p class="bet-status" id="betStatus" aria-live="polite">Choose your answer and place the bet to unlock the wheel.</p>
+            <p class="bet-status" id="betStatus" aria-live="polite">Выберите ответ и сделайте ставку, чтобы разблокировать колесо.</p>
           </div>
 
           <dl class="hero__meta">
             <div>
               <dt>12</dt>
-              <dd>contenders</dd>
+              <dd>претендентов</dd>
             </div>
             <div>
               <dt>01</dt>
-              <dd>corner office</dd>
+              <dd>главный кабинет</dd>
             </div>
             <div>
               <dt>100%</dt>
-              <dd>board-approved fun</dd>
+              <dd>веселье одобрено</dd>
             </div>
           </dl>
         </div>
@@ -97,10 +97,10 @@
           <div class="game-card">
             <div class="game-card__topline">
               <div>
-                <span class="market-label">CEO MARKET · #2408</span>
-                <h2>Choose the next chief</h2>
+                <span class="market-label">РЫНОК ГЕНДИРЕКТОРА · #2408</span>
+                <h2>Выберите нового руководителя</h2>
               </div>
-              <div class="market-status"><i></i> Open</div>
+              <div class="market-status"><i></i> Открыто</div>
             </div>
 
             <div class="wheel-machine" id="wheelMachine">
@@ -114,7 +114,7 @@
                   class="wheel"
                   id="ceoWheel"
                   role="img"
-                  aria-label="A wheel containing twelve possible CEO candidates"
+                  aria-label="Колесо с двенадцатью кандидатами на пост генерального директора"
                 ></div>
                 <div class="wheel-hub" aria-hidden="true">
                   <img src="assets/miha-wheel.jpg" alt="" />
@@ -135,14 +135,14 @@
             <div class="result" id="result" aria-live="polite">
               <span class="result__icon" aria-hidden="true">?</span>
               <div>
-                <small>Wheel status</small>
-                <strong id="resultText">Place your bet to unlock the wheel</strong>
+                <small>Статус колеса</small>
+                <strong id="resultText">Сделайте ставку, чтобы разблокировать колесо</strong>
               </div>
             </div>
 
             <button class="button button--red button--wide js-spin" type="button" disabled>
-              <span class="spin-label">Place your bet first</span>
-              <span class="button__odds">1 spin</span>
+              <span class="spin-label">Сначала сделайте ставку</span>
+              <span class="button__odds">1 попытка</span>
             </button>
           </div>
         </div>
@@ -151,10 +151,10 @@
       <section class="process" id="how" aria-labelledby="process-title">
         <div class="section-heading">
           <div>
-            <p class="overline overline--red">Three steps. Zero committees.</p>
-            <h2 id="process-title">Leadership selection, accelerated.</h2>
+            <p class="overline overline--red">Три шага. Ноль совещаний.</p>
+            <h2 id="process-title">Выбор руководителя. В ускоренном режиме.</h2>
           </div>
-          <p>Built as an interactive promo concept to showcase fast, polished web experiences with a little personality.</p>
+          <p>Интерактивное промо, которое показывает, как быстро создавать эффектные сайты с характером.</p>
         </div>
 
         <div class="steps">
@@ -163,8 +163,8 @@
             <div class="step-card__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18" /></svg>
             </div>
-            <h3>Gather the names</h3>
-            <p>A perfectly scientific shortlist of people who looked confident near the coffee machine.</p>
+            <h3>Соберите имена</h3>
+            <p>Абсолютно научный список тех, кто особенно уверенно выглядел рядом с кофемашиной.</p>
           </article>
 
           <article class="step-card step-card--dark">
@@ -172,8 +172,8 @@
             <div class="step-card__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 1 0 2-4.9M5 4v5h5" /></svg>
             </div>
-            <h3>Spin with confidence</h3>
-            <p>One tap sets the physical-style wheel in motion, with a suspiciously decisive result.</p>
+            <h3>Крутите уверенно</h3>
+            <p>Одно нажатие запускает колесо и приводит к подозрительно однозначному результату.</p>
           </article>
 
           <article class="step-card step-card--red">
@@ -181,53 +181,53 @@
             <div class="step-card__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg>
             </div>
-            <h3>Meet the new boss</h3>
-            <p>Celebrate Miha, update the org chart, and pretend the board was involved.</p>
+            <h3>Встречайте нового босса</h3>
+            <p>Поздравьте Миху, обновите оргструктуру и сделайте вид, что совет директоров участвовал.</p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <a class="logo logo--footer" href="#top" aria-label="FONMIHNET home">
+      <a class="logo logo--footer" href="#top" aria-label="Главная FONMIHNET">
         <svg class="logo__mark" viewBox="0 0 36 36" aria-hidden="true">
           <path d="M7 5h22v7H15v4h12v7H15v9H7z" />
         </svg>
         <span>FONMIHNET</span>
       </a>
-      <p>Concept promo · Made for the team, not for real betting.</p>
-      <a class="footer-link" href="#wheel">Back to the wheel ↑</a>
+      <p>Демо-концепт · Для команды, без реальных ставок.</p>
+      <a class="footer-link" href="#wheel">Назад к колесу ↑</a>
     </footer>
 
     <div class="fireworks" id="fireworks" aria-hidden="true"></div>
 
     <div class="winner-modal" id="winnerModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="winnerTitle">
-      <button class="winner-modal__backdrop js-close-winner" type="button" aria-label="Close winner popup"></button>
+      <button class="winner-modal__backdrop js-close-winner" type="button" aria-label="Закрыть окно с результатом"></button>
       <div class="winner-card">
-        <button class="winner-card__close js-close-winner" type="button" aria-label="Close winner popup">×</button>
-        <div class="winner-card__avatar"><img src="assets/miha-wheel.jpg" alt="Miha wearing an orange gaming headset" /></div>
-        <p class="winner-card__eyebrow">The wheel has spoken</p>
-        <h2 id="winnerTitle">You called it — Miha is CEO!</h2>
-        <p class="winner-card__copy" id="winnerCopy">Your 50× winner prize</p>
-        <strong class="winner-card__prize" id="prizeAmount">$25,000</strong>
-        <button class="button button--red js-close-winner" type="button">Claim the glory</button>
+        <button class="winner-card__close js-close-winner" type="button" aria-label="Закрыть окно с результатом">×</button>
+        <div class="winner-card__avatar"><img src="assets/miha-wheel.jpg" alt="Миха в оранжевой игровой гарнитуре" /></div>
+        <p class="winner-card__eyebrow">Колесо сделало выбор</p>
+        <h2 id="winnerTitle">Вы угадали — Миха наш гендиректор!</h2>
+        <p class="winner-card__copy" id="winnerCopy">Ваш выигрыш с коэффициентом 50×</p>
+        <strong class="winner-card__prize" id="prizeAmount">25 000 $</strong>
+        <button class="button button--red js-close-winner" type="button">Забрать славу</button>
       </div>
     </div>
 
     <script>
       const candidates = [
-        'MIHA',
-        'ALEX',
-        'NINA',
-        'MAX',
-        'SASHA',
-        'KATE',
-        'DIMA',
-        'MARY',
-        'ROMAN',
-        'LENA',
-        'IGOR',
-        'WILDCARD'
+        'МИХА',
+        'АЛЕКС',
+        'НИНА',
+        'МАКС',
+        'САША',
+        'КЕЙТ',
+        'ДИМА',
+        'МЭРИ',
+        'РОМАН',
+        'ЛЕНА',
+        'ИГОРЬ',
+        'СЮРПРИЗ'
       ];
 
       const colors = [
@@ -293,9 +293,10 @@
       }
 
       function formatMoney(amount) {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('ru-RU', {
           style: 'currency',
           currency: 'USD',
+          currencyDisplay: 'narrowSymbol',
           maximumFractionDigits: 0
         }).format(amount);
       }
@@ -309,10 +310,10 @@
       function resetPlacedBet() {
         betPlaced = false;
         setButtonsDisabled(true);
-        spinLabels.forEach((label) => { label.textContent = 'Place your bet first'; });
+        spinLabels.forEach((label) => { label.textContent = 'Сначала сделайте ставку'; });
         result.classList.remove('result--winner');
         resultIcon.textContent = '?';
-        resultText.textContent = 'Place your bet to unlock the wheel';
+        resultText.textContent = 'Сделайте ставку, чтобы разблокировать колесо';
       }
 
       function closeWinner() {
@@ -345,8 +346,8 @@
       function showWinner() {
         const won = betChoice === 'yes';
         const prize = won ? betAmount * 50 : 0;
-        winnerTitle.textContent = won ? 'You called it — Miha is CEO!' : 'Plot twist — Miha is CEO!';
-        winnerCopy.textContent = won ? 'Your 50× winner prize' : 'The NO bet missed. Winning prize';
+        winnerTitle.textContent = won ? 'Вы угадали — Миха наш гендиректор!' : 'Вот это поворот — Миха наш гендиректор!';
+        winnerCopy.textContent = won ? 'Ваш выигрыш с коэффициентом 50×' : 'Ставка «Нет» не сыграла. Ваш выигрыш';
         prizeAmount.textContent = formatMoney(prize);
         winnerModal.classList.add('is-open');
         winnerModal.setAttribute('aria-hidden', 'false');
@@ -357,7 +358,7 @@
         if (isSpinning) return;
         if (!betPlaced) {
           document.getElementById('betSlip').scrollIntoView({ behavior: 'smooth', block: 'center' });
-          betStatus.textContent = 'Place your bet before spinning the wheel.';
+          betStatus.textContent = 'Сначала сделайте ставку, а затем крутите колесо.';
           return;
         }
 
@@ -367,7 +368,7 @@
         setButtonsDisabled(true);
         result.classList.remove('result--winner');
         resultIcon.textContent = '···';
-        resultText.textContent = 'The board is deliberating…';
+        resultText.textContent = 'Совет директоров совещается…';
 
         const selectedIndex = 0;
         const currentAngle = ((rotation % 360) + 360) % 360;
@@ -378,7 +379,7 @@
 
         window.setTimeout(() => {
           resultIcon.textContent = '✓';
-          resultText.textContent = 'MIHA gets the corner office!';
+          resultText.textContent = 'МИХА получает главный кабинет!';
           result.classList.add('result--winner');
           showWinner();
           isSpinning = false;
@@ -394,18 +395,20 @@
           choice.setAttribute('aria-pressed', String(selected));
         });
         resetPlacedBet();
-        betStatus.textContent = `Selected ${betChoice.toUpperCase()}. Place the bet to continue.`;
+        betStatus.textContent = betChoice === 'yes'
+          ? 'Вы выбрали «Да». Сделайте ставку, чтобы продолжить.'
+          : 'Вы выбрали «Нет». Сделайте ставку, чтобы продолжить.';
       }));
 
       betAmountInput.addEventListener('input', () => {
         resetPlacedBet();
-        betStatus.textContent = 'Stake changed. Place the bet again to lock it in.';
+        betStatus.textContent = 'Сумма изменилась. Сделайте ставку ещё раз, чтобы зафиксировать её.';
       });
 
       placeBetBtn.addEventListener('click', () => {
         const amount = Number(betAmountInput.value);
         if (!Number.isFinite(amount) || amount <= 0) {
-          betStatus.textContent = 'Enter a valid USD amount greater than zero.';
+          betStatus.textContent = 'Введите корректную сумму в долларах больше нуля.';
           betAmountInput.focus();
           return;
         }
@@ -413,10 +416,10 @@
         betAmount = amount;
         betPlaced = true;
         setButtonsDisabled(false);
-        spinLabels.forEach((label) => { label.textContent = 'Spin for the CEO'; });
+        spinLabels.forEach((label) => { label.textContent = 'Крутить колесо'; });
         betStatus.textContent = betChoice === 'yes'
-          ? `Bet placed: ${formatMoney(betAmount)} on YES · potential prize ${formatMoney(betAmount * 50)}.`
-          : `Bet placed: ${formatMoney(betAmount)} on NO · bold choice.`;
+          ? `Ставка принята: ${formatMoney(betAmount)} на «Да» · возможный выигрыш ${formatMoney(betAmount * 50)}.`
+          : `Ставка принята: ${formatMoney(betAmount)} на «Нет» · смелый выбор.`;
         document.getElementById('wheel').scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
 

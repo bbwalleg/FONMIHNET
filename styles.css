@@ -283,6 +283,11 @@ h1 {
   line-height: 0.94;
 }
 
+html[lang='ru'] h1 {
+  font-size: clamp(50px, 4.15vw, 64px);
+  letter-spacing: -.06em;
+}
+
 h1 em {
   position: relative;
   display: inline-block;
@@ -535,6 +540,14 @@ h1 em::after {
   align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
+}
+
+.game-card__topline > div:first-child {
+  min-width: 0;
+}
+
+.market-status {
+  flex: 0 0 auto;
 }
 
 .market-label {
@@ -1234,13 +1247,19 @@ h1 em::after {
     font-size: clamp(46px, 14vw, 68px);
   }
 
+  html[lang='ru'] h1 {
+    font-size: clamp(40px, 10.5vw, 52px);
+    overflow-wrap: anywhere;
+  }
+
   .hero__lead {
     font-size: 15px;
   }
 
   .hero__meta {
     margin-top: 34px;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .hero__meta div {
