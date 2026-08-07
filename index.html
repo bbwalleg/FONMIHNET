@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FONMIHNET | CEO Prediction Wheel</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">FONMIHNET</div>
+        <nav class="nav-links">
+          <a href="#prediction">Prediction</a>
+          <a href="#wheel">Wheel</a>
+          <a href="#join">Join Now</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" id="prediction">
+          <div class="hero-copy">
+            <p class="eyebrow">Exclusive bonus event</p>
+            <h1>Predict the next CEO and spin for glory.</h1>
+            <p class="lead">
+              Place your bet on the only available outcome, then let the wheel reveal your reward.
+              The experience is designed to feel premium, bold, and playful — like a polished promo page built for a modern bookmaker.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#wheel">Spin now</a>
+              <a class="btn btn-secondary" href="#join">Join FONMIHNET</a>
+            </div>
+          </div>
+
+          <div class="bet-panel">
+            <div class="question-card">
+              <p class="eyebrow">Prediction market</p>
+              <h2>How is gonna be next CEO?</h2>
+              <div class="bet-option">
+                <span class="option-badge">Only option</span>
+                <div>
+                  <strong>Miha</strong>
+                  <p>5x payout</p>
+                </div>
+              </div>
+              <label class="field" for="betAmount">
+                <span>Bet amount</span>
+                <input id="betAmount" type="number" min="1" step="1" value="100" />
+              </label>
+              <button class="action-btn" id="placeBetBtn">Place bet</button>
+              <p class="bet-status" id="betStatus">Choose your stake and place your bet before spinning.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wheel-section" id="wheel">
+          <div class="wheel-copy">
+            <p class="eyebrow">Centerpiece experience</p>
+            <h2>The fortune wheel</h2>
+            <p>
+              The wheel is built with about 25 “NOT MIHA” segments and one special “MIHA IS OUR NEW CEO” segment.
+              Once your bet is placed, the wheel always lands on the Miha segment for a guaranteed win.
+            </p>
+          </div>
+
+          <div class="wheel-stage">
+            <div class="fireworks" id="fireworks" aria-hidden="true"></div>
+            <div class="prize-medal hidden" id="prizeMedal">
+              <div class="medal-icon">🏅</div>
+              <h3>Winner!</h3>
+              <p id="prizeText">You won 500</p>
+            </div>
+            <div class="wheel-wrapper">
+              <div class="wheel-pointer"></div>
+              <div class="wheel" id="wheelCanvas"></div>
+              <div class="wheel-core">MIHA</div>
+              <button class="spin-btn" id="spinBtn">Spin the wheel</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer" id="join">
+        <p>Play responsibly • 18+</p>
+        <a href="#">Join FONMIHNET</a>
+      </footer>
+    </div>
+
+    <script>
+      const wheelCanvas = document.getElementById('wheelCanvas');
+      const spinBtn = document.getElementById('spinBtn');
+      const placeBetBtn = document.getElementById('placeBetBtn');
+      const betAmountInput = document.getElementById('betAmount');
+      const betStatus = document.getElementById('betStatus');
+      const prizeMedal = document.getElementById('prizeMedal');
+      const prizeText = document.getElementById('prizeText');
+      const fireworks = document.getElementById('fireworks');
+
+      let placedBet = 0;
+      let betLocked = false;
+
+      function buildWheel() {
+        const segmentCount = 26;
+        const step = 360 / segmentCount;
+        const colors = [
+          '#ffb347', '#ff7b1a', '#1b2342', '#274d6b', '#47c1ff', '#ffd166',
+          '#7b3fe4', '#ff5f7e', '#1f2a44', '#0e1730', '#2ec4b6', '#ff8fab',
+          '#f4a261', '#3b82f6', '#0f172a', '#f59e0b', '#a855f7', '#14b8a6',
+          '#f43f5e', '#f97316', '#60a5fa', '#22c55e', '#3b82f6', '#facc15', '#ef4444', '#111827'
+        ];
+
+        const gradientParts = [];
+        for (let i = 0; i < segmentCount; i += 1) {
+          const start = i * step;
+          const end = (i + 1) * step;
+          gradientParts.push(`${colors[i % colors.length]} ${start}deg ${end}deg`);
+        }
+
+        wheelCanvas.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+
+        const labelCount = segmentCount;
+        for (let i = 0; i < labelCount; i += 1) {
+          const label = document.createElement('div');
+          label.className = 'wheel-label';
+          label.textContent = i === 0 ? 'MIHA IS OUR NEW CEO' : 'NOT MIHA';
+          label.style.setProperty('--index', i);
+          wheelCanvas.appendChild(label);
+        }
+      }
+
+      function resetCelebration() {
+        prizeMedal.classList.add('hidden');
+        fireworks.innerHTML = '';
+      }
+
+      function launchFireworks() {
+        fireworks.innerHTML = '';
+        const pieces = 28;
+        for (let i = 0; i < pieces; i += 1) {
+          const piece = document.createElement('span');
+          const angle = (i / pieces) * Math.PI * 2;
+          const distance = 70 + Math.random() * 70;
+          piece.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+          piece.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+          piece.style.setProperty('--delay', `${Math.random() * 0.3}s`);
+          piece.style.setProperty('--color', ['#ffb347', '#ffd166', '#ff5f7e', '#47c1ff', '#ffffff'][i % 5]);
+          fireworks.appendChild(piece);
+        }
+      }
+
+      function showPrize(amount) {
+        prizeText.textContent = `You won ${amount.toLocaleString()} (${(amount / placedBet).toFixed(0)}x)`;
+        prizeMedal.classList.remove('hidden');
+      }
+
+      placeBetBtn.addEventListener('click', () => {
+        const value = Number(betAmountInput.value);
+        if (!value || value <= 0) {
+          betStatus.textContent = 'Please enter a valid bet amount.';
+          return;
+        }
+
+        placedBet = value;
+        betLocked = true;
+        betStatus.textContent = `Bet placed: ${value.toLocaleString()} on Miha — 5x payout.`;
+        spinBtn.disabled = false;
+      });
+
+      spinBtn.addEventListener('click', () => {
+        if (!betLocked || placedBet <= 0) {
+          betStatus.textContent = 'Please place your bet first.';
+          return;
+        }
+
+        resetCelebration();
+        spinBtn.disabled = true;
+        const segmentCount = 26;
+        const step = 360 / segmentCount;
+        const selectedIndex = 0;
+        const selectedCenter = selectedIndex * step + step / 2;
+        const landingRotation = 360 * 6 - 90 - selectedCenter;
+
+        wheelCanvas.style.transition = 'transform 4.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        wheelCanvas.style.transform = `rotate(${landingRotation}deg)`;
+
+        setTimeout(() => {
+          launchFireworks();
+          showPrize(placedBet * 5);
+          spinBtn.disabled = false;
+        }, 4700);
+      });
+
+      buildWheel();
+      spinBtn.disabled = true;
+      resetCelebration();
+    </script>
+  </body>
+</html>
