@@ -50,12 +50,31 @@
             Forget the rumour mill. Give the wheel one decisive spin and let destiny assign the corner office.
           </p>
 
-          <div class="hero__actions">
-            <button class="button button--light js-spin" type="button">
-              Spin the wheel
-              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6" /></svg>
-            </button>
-            <a class="text-link" href="#how">See how it works <span aria-hidden="true">↓</span></a>
+          <div class="bet-slip" id="betSlip">
+            <div class="bet-slip__topline">
+              <span class="bet-slip__tag">Bet slip</span>
+              <span class="bet-slip__multiplier">50×</span>
+            </div>
+            <h2>Bet on our new CEO name</h2>
+            <p>Is it gonna be Miha?</p>
+
+            <div class="bet-choices" role="group" aria-label="Will Miha be the new CEO?">
+              <button class="bet-choice is-selected" type="button" data-choice="yes" aria-pressed="true">
+                Yes <strong>50×</strong>
+              </button>
+              <button class="bet-choice" type="button" data-choice="no" aria-pressed="false">
+                No
+              </button>
+            </div>
+
+            <div class="bet-slip__action">
+              <label class="stake-field" for="betAmount">
+                <span>Bet amount</span>
+                <span class="stake-field__input"><i>$</i><input id="betAmount" type="number" min="1" step="10" value="500" inputmode="decimal" /></span>
+              </label>
+              <button class="button button--dark" id="placeBetBtn" type="button">Place bet</button>
+            </div>
+            <p class="bet-status" id="betStatus" aria-live="polite">Choose your answer and place the bet to unlock the wheel.</p>
           </div>
 
           <dl class="hero__meta">
@@ -98,7 +117,7 @@
                   aria-label="A wheel containing twelve possible CEO candidates"
                 ></div>
                 <div class="wheel-hub" aria-hidden="true">
-                  <svg viewBox="0 0 36 36"><path d="M7 5h22v7H15v4h12v7H15v9H7z" /></svg>
+                  <img src="assets/miha-wheel.jpg" alt="" />
                 </div>
               </div>
 
@@ -117,12 +136,12 @@
               <span class="result__icon" aria-hidden="true">?</span>
               <div>
                 <small>Wheel status</small>
-                <strong id="resultText">Ready when you are</strong>
+                <strong id="resultText">Place your bet to unlock the wheel</strong>
               </div>
             </div>
 
-            <button class="button button--red button--wide js-spin" type="button">
-              <span>Spin for the CEO</span>
+            <button class="button button--red button--wide js-spin" type="button" disabled>
+              <span class="spin-label">Place your bet first</span>
               <span class="button__odds">1 spin</span>
             </button>
           </div>
@@ -154,7 +173,7 @@
               <svg viewBox="0 0 24 24"><path d="M5 12a7 7 0 1 0 2-4.9M5 4v5h5" /></svg>
             </div>
             <h3>Spin with confidence</h3>
-            <p>One tap sets the physical-style wheel in motion, with a fair and dramatic result.</p>
+            <p>One tap sets the physical-style wheel in motion, with a suspiciously decisive result.</p>
           </article>
 
           <article class="step-card step-card--red">
@@ -163,21 +182,9 @@
               <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg>
             </div>
             <h3>Meet the new boss</h3>
-            <p>Celebrate the winner, update the org chart, and pretend the board was involved.</p>
+            <p>Celebrate Miha, update the org chart, and pretend the board was involved.</p>
           </article>
         </div>
-      </section>
-
-      <section class="showcase" aria-label="Website capabilities">
-        <div class="showcase__copy">
-          <p class="overline overline--red">Designed to perform</p>
-          <h2>Big campaign energy.<br />Small-screen precision.</h2>
-        </div>
-        <ul class="capability-list">
-          <li><span>01</span> Responsive by default <strong>Any screen</strong></li>
-          <li><span>02</span> Motion with purpose <strong>60 FPS</strong></li>
-          <li><span>03</span> Clear conversion paths <strong>One tap</strong></li>
-        </ul>
       </section>
     </main>
 
@@ -191,6 +198,21 @@
       <p>Concept promo · Made for the team, not for real betting.</p>
       <a class="footer-link" href="#wheel">Back to the wheel ↑</a>
     </footer>
+
+    <div class="fireworks" id="fireworks" aria-hidden="true"></div>
+
+    <div class="winner-modal" id="winnerModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="winnerTitle">
+      <button class="winner-modal__backdrop js-close-winner" type="button" aria-label="Close winner popup"></button>
+      <div class="winner-card">
+        <button class="winner-card__close js-close-winner" type="button" aria-label="Close winner popup">×</button>
+        <div class="winner-card__avatar"><img src="assets/miha-wheel.jpg" alt="Miha wearing an orange gaming headset" /></div>
+        <p class="winner-card__eyebrow">The wheel has spoken</p>
+        <h2 id="winnerTitle">You called it — Miha is CEO!</h2>
+        <p class="winner-card__copy" id="winnerCopy">Your 50× winner prize</p>
+        <strong class="winner-card__prize" id="prizeAmount">$25,000</strong>
+        <button class="button button--red js-close-winner" type="button">Claim the glory</button>
+      </div>
+    </div>
 
     <script>
       const candidates = [
@@ -226,13 +248,26 @@
       const wheel = document.getElementById('ceoWheel');
       const rimLights = document.getElementById('rimLights');
       const spinButtons = [...document.querySelectorAll('.js-spin')];
+      const spinLabels = [...document.querySelectorAll('.spin-label')];
       const result = document.getElementById('result');
       const resultText = document.getElementById('resultText');
       const resultIcon = result.querySelector('.result__icon');
+      const betChoices = [...document.querySelectorAll('.bet-choice')];
+      const betAmountInput = document.getElementById('betAmount');
+      const placeBetBtn = document.getElementById('placeBetBtn');
+      const betStatus = document.getElementById('betStatus');
+      const winnerModal = document.getElementById('winnerModal');
+      const winnerTitle = document.getElementById('winnerTitle');
+      const winnerCopy = document.getElementById('winnerCopy');
+      const prizeAmount = document.getElementById('prizeAmount');
+      const fireworks = document.getElementById('fireworks');
       const segmentSize = 360 / candidates.length;
       const spinDuration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 50 : 5200;
       let rotation = 0;
       let isSpinning = false;
+      let betChoice = 'yes';
+      let betAmount = 500;
+      let betPlaced = false;
 
       function buildWheel() {
         const gradient = candidates.map((_, index) => {
@@ -257,13 +292,12 @@
         });
       }
 
-      function getRandomIndex() {
-        if (window.crypto?.getRandomValues) {
-          const value = new Uint32Array(1);
-          window.crypto.getRandomValues(value);
-          return value[0] % candidates.length;
-        }
-        return Math.floor(Math.random() * candidates.length);
+      function formatMoney(amount) {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          maximumFractionDigits: 0
+        }).format(amount);
       }
 
       function setButtonsDisabled(disabled) {
@@ -272,16 +306,70 @@
         });
       }
 
+      function resetPlacedBet() {
+        betPlaced = false;
+        setButtonsDisabled(true);
+        spinLabels.forEach((label) => { label.textContent = 'Place your bet first'; });
+        result.classList.remove('result--winner');
+        resultIcon.textContent = '?';
+        resultText.textContent = 'Place your bet to unlock the wheel';
+      }
+
+      function closeWinner() {
+        winnerModal.classList.remove('is-open');
+        winnerModal.setAttribute('aria-hidden', 'true');
+      }
+
+      function launchFireworks() {
+        fireworks.innerHTML = '';
+        const colors = ['#ffffff', '#ffd43b', '#e30613', '#ff6873', '#68d8ff'];
+        const origins = [[24, 34], [50, 20], [76, 35], [34, 66], [67, 64]];
+
+        origins.forEach(([left, top], originIndex) => {
+          for (let index = 0; index < 18; index += 1) {
+            const piece = document.createElement('i');
+            const angle = (Math.PI * 2 * index) / 18;
+            const distance = 72 + Math.random() * 90;
+            piece.style.setProperty('--left', `${left}%`);
+            piece.style.setProperty('--top', `${top}%`);
+            piece.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+            piece.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+            piece.style.setProperty('--delay', `${originIndex * 0.13 + Math.random() * 0.12}s`);
+            piece.style.setProperty('--color', colors[(index + originIndex) % colors.length]);
+            piece.style.setProperty('--rotation', `${Math.random() * 300}deg`);
+            fireworks.appendChild(piece);
+          }
+        });
+      }
+
+      function showWinner() {
+        const won = betChoice === 'yes';
+        const prize = won ? betAmount * 50 : 0;
+        winnerTitle.textContent = won ? 'You called it — Miha is CEO!' : 'Plot twist — Miha is CEO!';
+        winnerCopy.textContent = won ? 'Your 50× winner prize' : 'The NO bet missed. Winning prize';
+        prizeAmount.textContent = formatMoney(prize);
+        winnerModal.classList.add('is-open');
+        winnerModal.setAttribute('aria-hidden', 'false');
+        launchFireworks();
+      }
+
       function spinWheel() {
         if (isSpinning) return;
+        if (!betPlaced) {
+          document.getElementById('betSlip').scrollIntoView({ behavior: 'smooth', block: 'center' });
+          betStatus.textContent = 'Place your bet before spinning the wheel.';
+          return;
+        }
 
         isSpinning = true;
+        closeWinner();
+        fireworks.innerHTML = '';
         setButtonsDisabled(true);
         result.classList.remove('result--winner');
         resultIcon.textContent = '···';
         resultText.textContent = 'The board is deliberating…';
 
-        const selectedIndex = getRandomIndex();
+        const selectedIndex = 0;
         const currentAngle = ((rotation % 360) + 360) % 360;
         const desiredAngle = ((-selectedIndex * segmentSize) % 360 + 360) % 360;
         const alignment = (desiredAngle - currentAngle + 360) % 360;
@@ -289,23 +377,57 @@
         wheel.style.transform = `rotate(${rotation}deg)`;
 
         window.setTimeout(() => {
-          const winner = candidates[selectedIndex];
           resultIcon.textContent = '✓';
-          resultText.textContent = winner === 'WILDCARD'
-            ? 'Plot twist — the search continues!'
-            : `${winner} gets the corner office!`;
+          resultText.textContent = 'MIHA gets the corner office!';
           result.classList.add('result--winner');
+          showWinner();
           isSpinning = false;
           setButtonsDisabled(false);
         }, spinDuration);
       }
 
-      spinButtons.forEach((button) => button.addEventListener('click', () => {
-        document.getElementById('wheel').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        window.setTimeout(spinWheel, button.closest('.game-card') ? 0 : 350);
+      betChoices.forEach((button) => button.addEventListener('click', () => {
+        betChoice = button.dataset.choice;
+        betChoices.forEach((choice) => {
+          const selected = choice === button;
+          choice.classList.toggle('is-selected', selected);
+          choice.setAttribute('aria-pressed', String(selected));
+        });
+        resetPlacedBet();
+        betStatus.textContent = `Selected ${betChoice.toUpperCase()}. Place the bet to continue.`;
       }));
 
+      betAmountInput.addEventListener('input', () => {
+        resetPlacedBet();
+        betStatus.textContent = 'Stake changed. Place the bet again to lock it in.';
+      });
+
+      placeBetBtn.addEventListener('click', () => {
+        const amount = Number(betAmountInput.value);
+        if (!Number.isFinite(amount) || amount <= 0) {
+          betStatus.textContent = 'Enter a valid USD amount greater than zero.';
+          betAmountInput.focus();
+          return;
+        }
+
+        betAmount = amount;
+        betPlaced = true;
+        setButtonsDisabled(false);
+        spinLabels.forEach((label) => { label.textContent = 'Spin for the CEO'; });
+        betStatus.textContent = betChoice === 'yes'
+          ? `Bet placed: ${formatMoney(betAmount)} on YES · potential prize ${formatMoney(betAmount * 50)}.`
+          : `Bet placed: ${formatMoney(betAmount)} on NO · bold choice.`;
+        document.getElementById('wheel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      spinButtons.forEach((button) => button.addEventListener('click', spinWheel));
+      document.querySelectorAll('.js-close-winner').forEach((button) => button.addEventListener('click', closeWinner));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeWinner();
+      });
+
       buildWheel();
+      setButtonsDisabled(true);
     </script>
   </body>
 </html>
